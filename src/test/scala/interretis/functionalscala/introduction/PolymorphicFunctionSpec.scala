@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class PolymorphicFunctionSpec extends FlatSpec with Matchers {
 
-  private def gt(a: Int, b: Int) = a > b
+  private val gt = (a: Int, b: Int) => a > b
 
   "empty array" should "be considered ordered" in {
     isSorted(Array(), gt) shouldBe true
