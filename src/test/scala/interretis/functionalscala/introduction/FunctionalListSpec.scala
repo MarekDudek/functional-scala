@@ -100,4 +100,12 @@ class FunctionalListSpec extends FlatSpec with Matchers {
   "init2 5" should "" in {
     init2(one) shouldBe FNil
   }
+
+  "length of empty list" should "be 0" in {
+    FList.length(FNil) shouldBe 0
+  }
+
+  "length of one to five list" should "be 5" in {
+    FList.length(oneToFive) shouldBe 5
+  }
 }

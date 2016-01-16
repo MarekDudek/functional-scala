@@ -1,5 +1,7 @@
 package interretis.functionalscala.introduction
 
+import scala.annotation.tailrec
+
 
 sealed trait FList[+A]
 
@@ -18,6 +20,37 @@ object FList {
     case FNil => 1.0
     case Cons(x, xs) => x * product(xs)
   }
+
+  def foldRight[A, B](as: FList[A], z: B)(f: (A, B) => B): B =
+    as match {
+      case FNil => z
+      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+
+  @tailrec
+  def foldLeft[A, B](as: FList[A], z: B)(f: (B, A) => B): B =
+    as match {
+      case FNil => z
+      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+    }
+
+  def sum2(ints: FList[Int]): Int =
+    foldRight(ints, 0)(_ + _)
+
+  def product2(ints: FList[Int]): Int =
+    foldRight(ints, 1)(_ * _)
+
+  def length[A](as: FList[A]): Int =
+    foldRight(as, 0)((_, acc) => acc + 1)
+
+  def sum3(ints: FList[Int]): Int =
+    foldLeft(ints, 0)(_ + _)
+
+  def product3(ints: FList[Int]): Int =
+    foldLeft(ints, 1)(_ * _)
+
+  def length3[A](as: FList[A]): Int =
+    foldLeft(as, 0)((acc, _) => acc + 1)
 
   def apply[A](as: A*): FList[A] =
     if (as.isEmpty)
