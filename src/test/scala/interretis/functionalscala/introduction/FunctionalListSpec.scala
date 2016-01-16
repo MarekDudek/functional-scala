@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{init2, drop, dropWhile, init}
+import interretis.functionalscala.introduction.FList.{drop, dropWhile, init, init2}
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -15,19 +15,19 @@ class FunctionalListSpec extends FlatSpec with Matchers {
     drop(FNil, 0) shouldBe FNil
   }
 
-  "dropping one" should "work" in {
+  "dropping one" should "" in {
     drop(oneToFive, 1) shouldBe twoToFive
   }
 
-  "dropping two" should "work" in {
+  "dropping two" should "" in {
     drop(oneToFive, 2) shouldBe threeToFive
   }
 
-  "dropping three" should "work" in {
+  "dropping three" should "" in {
     drop(oneToFive, 3) shouldBe fourToFive
   }
 
-  "dropping four" should "work" in {
+  "dropping four" should "" in {
     drop(oneToFive, 4) shouldBe five
   }
 
@@ -39,20 +39,20 @@ class FunctionalListSpec extends FlatSpec with Matchers {
     drop(oneToFive, 6) shouldBe FNil
   }
 
-  "dropWhile 1" should "work" in {
-    dropWhile(oneToFive, (n: Int) => n > 6) shouldBe oneToFive
+  "dropWhile 1" should "" in {
+    dropWhile(oneToFive)(n => n > 6) shouldBe oneToFive
   }
 
-  "dropWhile 2" should "work" in {
-    dropWhile(oneToFive, (n: Int) => n < 2) shouldBe twoToFive
+  "dropWhile 2" should "" in {
+    dropWhile(oneToFive)(n => n < 2) shouldBe twoToFive
   }
 
-  "dropWhile 3" should "work" in {
-    dropWhile(oneToFive, (n: Int) => n < 5) shouldBe five
+  "dropWhile 3" should "" in {
+    dropWhile(oneToFive)(n => n < 5) shouldBe five
   }
 
-  "dropWhile 4" should "work" in {
-    dropWhile(oneToFive, (n: Int) => n % 2 != 0) shouldBe twoToFive
+  "dropWhile 4" should "" in {
+    dropWhile(oneToFive)(n => n % 2 != 0) shouldBe twoToFive
   }
 
   private val oneToFour = Cons(1, Cons(2, Cons(3, Cons(4, FNil))))
@@ -60,44 +60,44 @@ class FunctionalListSpec extends FlatSpec with Matchers {
   private val oneToTwo = Cons(1, Cons(2, FNil))
   private val one = Cons(1, FNil)
 
-  "init 1" should "work" in {
+  "init 1" should "" in {
     init(oneToFive) shouldBe oneToFour
   }
 
-  "init 2" should "work" in {
+  "init 2" should "" in {
     init(oneToFour) shouldBe oneToThree
   }
 
-  "init 3" should "work" in {
+  "init 3" should "" in {
     init(oneToThree) shouldBe oneToTwo
   }
 
-  "init 4" should "work" in {
+  "init 4" should "" in {
     init(oneToTwo) shouldBe one
   }
 
-  "init 5" should "work" in {
+  "init 5" should "" in {
     init(one) shouldBe FNil
   }
 
 
-  "init2 1" should "work" in {
+  "init2 1" should "" in {
     init2(oneToFive) shouldBe oneToFour
   }
 
-  "init2 2" should "work" in {
+  "init2 2" should "" in {
     init2(oneToFour) shouldBe oneToThree
   }
 
-  "init2 3" should "work" in {
+  "init2 3" should "" in {
     init2(oneToThree) shouldBe oneToTwo
   }
 
-  "init2 4" should "work" in {
+  "init2 4" should "" in {
     init2(oneToTwo) shouldBe one
   }
 
-  "init2 5" should "work" in {
+  "init2 5" should "" in {
     init2(one) shouldBe FNil
   }
 }

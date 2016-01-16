@@ -16,7 +16,6 @@ object FList {
 
   def product(ds: FList[Double]): Double = ds match {
     case FNil => 1.0
-    case Cons(0.0, _) => 0.0
     case Cons(x, xs) => x * product(xs)
   }
 
@@ -48,10 +47,10 @@ object FList {
       }
   }
 
-  def dropWhile[A](list: FList[A], predicate: A => Boolean): FList[A] =
+  def dropWhile[A](list: FList[A])(predicate: A => Boolean): FList[A] =
     list match {
       case Cons(x, xs) if predicate(x) =>
-        dropWhile(xs, predicate)
+        dropWhile(xs)(predicate)
       case _ =>
         list
     }
