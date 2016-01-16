@@ -34,6 +34,12 @@ object FList {
       case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
     }
 
+  def foldLeft2[A, B](as: FList[A], z: B)(f: (B, A) => B): B =
+    foldRight(reverse(as), z)((a, b) => f(b, a))
+
+  def foldRight2[A, B](as: FList[A], z: B)(f: (A, B) => B): B =
+    foldLeft(as, z)((b, a) => f(a, b))
+
   def sum2(ints: FList[Int]): Int =
     foldRight(ints, 0)(_ + _)
 
@@ -105,4 +111,16 @@ object FList {
       }
     loop(list)
   }
+
+  def reverse[A](as: FList[A]): FList[A] = {
+    def loop(from: FList[A], to: FList[A]): FList[A] =
+      from match {
+        case FNil => to
+        case Cons(x, xs) => loop(xs, Cons(x, to))
+      }
+    loop(as, FNil)
+  }
+
+  def reverse2[A](as: FList[A]): FList[A] =
+    foldLeft(as, FNil: FList[A])((acc, a) => Cons(a, acc))
 }

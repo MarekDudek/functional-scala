@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{drop, dropWhile, init, init2}
+import interretis.functionalscala.introduction.FList.{drop, dropWhile, foldLeft2, foldRight2, init, init2, reverse, reverse2}
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -107,5 +107,31 @@ class FunctionalListSpec extends FlatSpec with Matchers {
 
   "length of one to five list" should "be 5" in {
     FList.length(oneToFive) shouldBe 5
+  }
+
+  private val fiveToOne = Cons(5, Cons(4, Cons(3, Cons(2, Cons(1, FNil)))))
+
+  "reverse on empty list" should "return the same" in {
+    reverse(FNil) shouldBe FNil
+  }
+
+  "reverse on 1 to 5" should "return 5 to 1" in {
+    reverse(oneToFive) shouldBe fiveToOne
+  }
+
+  "reverse2 on empty list" should "return the same" in {
+    reverse2(FNil) shouldBe FNil
+  }
+
+  "reverse2 on 1 to 5" should "return 5 to 1" in {
+    reverse2(oneToFive) shouldBe fiveToOne
+  }
+
+  "foldRight via foldLeft" should "work properly" in {
+    foldLeft2(oneToFive, FNil: FList[Int])((acc, a) => Cons(a, acc)) shouldBe fiveToOne
+  }
+
+  "foldLeft via foldRight" should "work properly" in {
+    foldRight2(oneToFive, FNil: FList[Int])((a, acc) => Cons(a, acc)) shouldBe fiveToOne
   }
 }
