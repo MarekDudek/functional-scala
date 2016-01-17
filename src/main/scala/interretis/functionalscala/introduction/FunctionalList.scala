@@ -40,6 +40,18 @@ object FList {
   def foldRight2[A, B](as: FList[A], z: B)(f: (A, B) => B): B =
     foldLeft(as, z)((b, a) => f(a, b))
 
+  def append[A](as: FList[A], a: A): FList[A] =
+    as match {
+      case FNil => Cons(a, FNil)
+      case Cons(x, xs) => Cons(x, append(xs, a))
+    }
+
+  def append2[A](as: FList[A], a: A): FList[A] =
+    foldRight(as, Cons(a, FNil))((x, y) => Cons(x, y))
+
+  def append3[A](as: FList[A], a: A): FList[A] =
+    foldLeft(reverse(as), Cons(a, FNil))((x, y) => Cons(y, x))
+
   def sum2(ints: FList[Int]): Int =
     foldRight(ints, 0)(_ + _)
 

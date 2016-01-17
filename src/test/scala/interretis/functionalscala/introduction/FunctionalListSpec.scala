@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{drop, dropWhile, foldLeft2, foldRight2, init, init2, reverse, reverse2}
+import interretis.functionalscala.introduction.FList.{drop, dropWhile, foldLeft2, foldRight2, init, init2, reverse, reverse2, append, append2, append3}
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -133,5 +133,29 @@ class FunctionalListSpec extends FlatSpec with Matchers {
 
   "foldLeft via foldRight" should "work properly" in {
     foldRight2(oneToFive, FNil: FList[Int])((a, acc) => Cons(a, acc)) shouldBe fiveToOne
+  }
+
+  "append to empty list" should "result " in {
+    append(FNil, 5) shouldBe five
+  }
+
+  "append to non-empty list" should "properly append" in {
+    append(oneToFour, 5) shouldBe oneToFive
+  }
+
+  "append2 to empty list" should "properly append" in {
+    append2(FNil, 5) shouldBe five
+  }
+
+  "append2 to non-empty list" should "properly append" in {
+    append2(oneToFour, 5) shouldBe oneToFive
+  }
+
+  "append3 to empty list" should "properly append" in {
+    append3(FNil, 5) shouldBe five
+  }
+
+  "append3 to non-empty list" should "properly append" in {
+    append3(oneToFour, 5) shouldBe oneToFive
   }
 }
