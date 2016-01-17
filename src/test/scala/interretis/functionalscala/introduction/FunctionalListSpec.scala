@@ -1,7 +1,7 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{addOne, append, append2, append3, changeToString, concat, drop, dropWhile, filter, foldLeft2, foldRight2, init, init2, map, reverse, reverse2}
-import interretis.functionalscala.introduction.FList2.{addLists, filter2}
+import interretis.functionalscala.introduction.FList._
+import interretis.functionalscala.introduction.Folding.reverse
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -17,27 +17,27 @@ class FunctionalListSpec extends FlatSpec with Matchers {
   }
 
   "dropping one" should "" in {
-    drop(oneToFive, 1) shouldBe twoToFive
+    drop(FList(1, 2, 3, 4, 5), 1) shouldBe FList(2, 3, 4, 5)
   }
 
   "dropping two" should "" in {
-    drop(oneToFive, 2) shouldBe threeToFive
+    drop(FList(1, 2, 3, 4, 5), 2) shouldBe FList(3, 4, 5)
   }
 
   "dropping three" should "" in {
-    drop(oneToFive, 3) shouldBe fourToFive
+    drop(FList(1, 2, 3, 4, 5), 3) shouldBe FList(4, 5)
   }
 
   "dropping four" should "" in {
-    drop(oneToFive, 4) shouldBe five
+    drop(FList(1, 2, 3, 4, 5), 4) shouldBe FList(5)
   }
 
   "dropping all" should "return empty list" in {
-    drop(oneToFive, 5) shouldBe FNil
+    drop(FList(1, 2, 3, 4, 5), 5) shouldBe FNil
   }
 
   "dropping more that length" should "not be an error" in {
-    drop(oneToFive, 6) shouldBe FNil
+    drop(FList(1, 2, 3, 4, 5), 6) shouldBe FNil
   }
 
   "dropWhile 1" should "" in {
@@ -112,53 +112,10 @@ class FunctionalListSpec extends FlatSpec with Matchers {
 
   private val fiveToOne = Cons(5, Cons(4, Cons(3, Cons(2, Cons(1, FNil)))))
 
-  "reverse on empty list" should "return the same" in {
-    reverse(FNil) shouldBe FNil
-  }
 
-  "reverse on 1 to 5" should "return 5 to 1" in {
-    reverse(oneToFive) shouldBe fiveToOne
-  }
 
-  "reverse2 on empty list" should "return the same" in {
-    reverse2(FNil) shouldBe FNil
-  }
 
-  "reverse2 on 1 to 5" should "return 5 to 1" in {
-    reverse2(oneToFive) shouldBe fiveToOne
-  }
 
-  "foldRight via foldLeft" should "work properly" in {
-    foldLeft2(oneToFive, FNil: FList[Int])((acc, a) => Cons(a, acc)) shouldBe fiveToOne
-  }
-
-  "foldLeft via foldRight" should "work properly" in {
-    foldRight2(oneToFive, FNil: FList[Int])((a, acc) => Cons(a, acc)) shouldBe fiveToOne
-  }
-
-  "append to empty list" should "result " in {
-    append(FNil, 5) shouldBe five
-  }
-
-  "append to non-empty list" should "properly append" in {
-    append(oneToFour, 5) shouldBe oneToFive
-  }
-
-  "append2 to empty list" should "properly append" in {
-    append2(FNil, 5) shouldBe five
-  }
-
-  "append2 to non-empty list" should "properly append" in {
-    append2(oneToFour, 5) shouldBe oneToFive
-  }
-
-  "append3 to empty list" should "properly append" in {
-    append3(FNil, 5) shouldBe five
-  }
-
-  "append3 to non-empty list" should "properly append" in {
-    append3(oneToFour, 5) shouldBe oneToFive
-  }
 
   "concat" should "work" in {
     concat(oneToThree, fourToFive) shouldBe oneToFive
@@ -183,10 +140,10 @@ class FunctionalListSpec extends FlatSpec with Matchers {
   }
 
   "filter2" should "work" in {
-    filter2(oneToFive)(_ % 2 == 0) shouldBe Cons(2, Cons(4, FNil))
+    FList2.filter2(oneToFive)(_ % 2 == 0) shouldBe Cons(2, Cons(4, FNil))
   }
 
   "add lists" should "work" in {
-    addLists(Cons(1, Cons(2, Cons(3, FNil))), Cons(4, Cons(5, Cons(6, FNil)))) shouldBe Cons(5, Cons(7, Cons(9, FNil)))
+    FList2.addLists(Cons(1, Cons(2, Cons(3, FNil))), Cons(4, Cons(5, Cons(6, FNil)))) shouldBe Cons(5, Cons(7, Cons(9, FNil)))
   }
 }
