@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{drop, dropWhile, foldLeft2, foldRight2, init, init2, reverse, reverse2, append, append2, append3}
+import interretis.functionalscala.introduction.FList.{drop, dropWhile, foldLeft2, foldRight2, init, init2, reverse, reverse2, append, append2, append3, concat}
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -157,5 +157,9 @@ class FunctionalListSpec extends FlatSpec with Matchers {
 
   "append3 to non-empty list" should "properly append" in {
     append3(oneToFour, 5) shouldBe oneToFive
+  }
+
+  "concat" should "work" in {
+    concat(oneToThree, fourToFive) shouldBe oneToFive
   }
 }

@@ -52,6 +52,12 @@ object FList {
   def append3[A](as: FList[A], a: A): FList[A] =
     foldLeft(reverse(as), Cons(a, FNil))((x, y) => Cons(y, x))
 
+  def concat[A](as: FList[A], bs: FList[A]): FList[A] =
+    foldRight(as, bs)((x, y) => Cons(x, y))
+
+  def flatten[A](aas: FList[FList[A]]): FList[A] =
+    foldRight(aas, FNil: FList[A])((x, y) => concat(x, y))
+
   def sum2(ints: FList[Int]): Int =
     foldRight(ints, 0)(_ + _)
 
