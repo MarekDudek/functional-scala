@@ -28,6 +28,32 @@ object ListOperations {
     loop(l)
   }
 
+  def tail[A](l: FList[A]): FList[A] =
+    l match {
+      case FNil => sys.error("tail on empty list")
+      case Cons(_, t) => t
+    }
+
+  def drop[A](l: FList[A], n: Int): FList[A] = {
+    if (n <= 0) l
+    else l match {
+      case FNil => FNil
+      case Cons(_, t) => drop(t, n - 1)
+    }
+  }
+
+  def dropWhile[A](l: FList[A])(p: A => Boolean): FList[A] =
+    l match {
+      case Cons(h, t) if p(h) => dropWhile(t)(p)
+      case _ => l
+    }
+
+  def concat[A](l1: FList[A], l2: FList[A]): FList[A] =
+    foldRight(l1, l2)((h1, h2) => Cons(h1, h2))
+
+  def flatten[A](l: FList[FList[A]]): FList[A] =
+    foldRight(l, FNil: FList[A])((h1, h2) => concat(h1, h2))
+
   def append[A](l: FList[A], e: A): FList[A] =
     l match {
       case FNil => Cons(e, FNil)
