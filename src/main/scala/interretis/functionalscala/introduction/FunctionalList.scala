@@ -1,5 +1,7 @@
 package interretis.functionalscala.introduction
 
+import interretis.functionalscala.introduction.FList.{concat, foldLeft, reverse}
+
 import scala.annotation.tailrec
 
 
@@ -154,5 +156,28 @@ object FList {
   def filter[A](as: FList[A])(f: A => Boolean): FList[A] =
     foldLeft(reverse(as), FNil: FList[A]) {
       (acc, a) => if (f(a)) Cons(a, acc) else acc
+    }
+}
+
+object FList2 {
+
+  def flatMap[A, B](as: FList[A])(f: A => FList[B]): FList[B] =
+    foldLeft(reverse(as), FNil: FList[B])((acc, a) => concat(f(a), acc))
+
+  def filter2[A](as: FList[A])(f: A => Boolean): FList[A] =
+    flatMap(as)(a => if (f(a)) Cons(a, FNil) else FNil)
+
+  def addLists(as: FList[Int], bs: FList[Int]): FList[Int] =
+    (as, bs) match {
+      case (FNil, _) => FNil
+      case (_, FNil) => FNil
+      case (Cons(x, xs), Cons(y, ys)) => Cons(x + y, addLists(xs, ys))
+    }
+
+  def zipWith[A, B, C](as: FList[A], bs: FList[B])(f: (A, B) => C): FList[C] =
+    (as, bs) match {
+      case (FNil, _) => FNil
+      case (_, FNil) => FNil
+      case (Cons(x, xs), Cons(y, ys)) => Cons(f(x, y), zipWith(xs, ys)(f))
     }
 }
