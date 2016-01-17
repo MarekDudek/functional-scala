@@ -141,4 +141,18 @@ object FList {
 
   def reverse2[A](as: FList[A]): FList[A] =
     foldLeft(as, FNil: FList[A])((acc, a) => Cons(a, acc))
+
+  def addOne(is: FList[Int]): FList[Int] =
+    foldLeft(reverse(is), FNil: FList[Int])((acc, a) => Cons(a + 1, acc))
+
+  def changeToString(is: FList[Int]): FList[String] =
+    foldLeft(reverse(is), FNil: FList[String])((acc, i) => Cons(i.toString, acc))
+
+  def map[A, B](as: FList[A])(f: A => B): FList[B] =
+    foldLeft(reverse(as), FNil: FList[B])((acc, a) => Cons(f(a), acc))
+
+  def filter[A](as: FList[A])(f: A => Boolean): FList[A] =
+    foldLeft(reverse(as), FNil: FList[A]) {
+      (acc, a) => if (f(a)) Cons(a, acc) else acc
+    }
 }

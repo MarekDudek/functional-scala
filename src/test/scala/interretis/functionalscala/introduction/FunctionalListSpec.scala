@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{drop, dropWhile, foldLeft2, foldRight2, init, init2, reverse, reverse2, append, append2, append3, concat}
+import interretis.functionalscala.introduction.FList.{addOne, append, append2, append3, changeToString, concat, drop, dropWhile, filter, foldLeft2, foldRight2, init, init2, map, reverse, reverse2}
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -161,5 +161,23 @@ class FunctionalListSpec extends FlatSpec with Matchers {
 
   "concat" should "work" in {
     concat(oneToThree, fourToFive) shouldBe oneToFive
+  }
+
+  "add one" should "work" in {
+    addOne(oneToFour) shouldBe twoToFive
+  }
+
+  private val oneToFiveStrings = Cons("1", Cons("2", Cons("3", Cons("4", Cons("5", FNil)))))
+
+  "int to string" should "work" in {
+    changeToString(oneToFive) shouldBe oneToFiveStrings
+  }
+
+  "map" should "work" in {
+    map(oneToFive)(_.toString) shouldBe oneToFiveStrings
+  }
+
+  "filter" should "work" in {
+    filter(oneToFive)(_ % 2 == 0) shouldBe Cons(2, Cons(4, FNil))
   }
 }
