@@ -14,20 +14,12 @@ case class Cons[+A](head: A, tail: FList[A]) extends FList[A]
 object FList {
 
 
-
   def concat[A](as: FList[A], bs: FList[A]): FList[A] =
     foldRight(as, bs)((x, y) => Cons(x, y))
 
   def flatten[A](aas: FList[FList[A]]): FList[A] =
     foldRight(aas, FNil: FList[A])((x, y) => concat(x, y))
 
-
-  def length[A](as: FList[A]): Int =
-    foldRight(as, 0)((_, acc) => acc + 1)
-
-
-  def length3[A](as: FList[A]): Int =
-    foldLeft(as, 0)((acc, _) => acc + 1)
 
   def apply[A](as: A*): FList[A] =
     if (as.isEmpty)
@@ -65,23 +57,7 @@ object FList {
         list
     }
 
-  def init[A](list: FList[A]): FList[A] =
-    list match {
-      case FNil => sys.error("init on empty list")
-      case Cons(_, FNil) => FNil
-      case Cons(x, xs) => Cons(x, init(xs))
-    }
 
-  def init2[A](list: FList[A]): FList[A] = {
-    val buffer = scala.collection.mutable.ListBuffer[A]()
-    def loop(rest: FList[A]): FList[A] =
-      rest match {
-        case FNil => sys.error("init on empty list")
-        case Cons(_, FNil) => FList(buffer.toList: _*)
-        case Cons(x, xs) => buffer += x; loop(xs)
-      }
-    loop(list)
-  }
 
 
   def addOne(is: FList[Int]): FList[Int] =

@@ -1,7 +1,6 @@
 package interretis.functionalscala.introduction
 
 import interretis.functionalscala.introduction.FList._
-import interretis.functionalscala.introduction.Folding.reverse
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -61,60 +60,10 @@ class FunctionalListSpec extends FlatSpec with Matchers {
   private val oneToTwo = Cons(1, Cons(2, FNil))
   private val one = Cons(1, FNil)
 
-  "init 1" should "" in {
-    init(oneToFive) shouldBe oneToFour
-  }
-
-  "init 2" should "" in {
-    init(oneToFour) shouldBe oneToThree
-  }
-
-  "init 3" should "" in {
-    init(oneToThree) shouldBe oneToTwo
-  }
-
-  "init 4" should "" in {
-    init(oneToTwo) shouldBe one
-  }
-
-  "init 5" should "" in {
-    init(one) shouldBe FNil
-  }
 
 
-  "init2 1" should "" in {
-    init2(oneToFive) shouldBe oneToFour
-  }
-
-  "init2 2" should "" in {
-    init2(oneToFour) shouldBe oneToThree
-  }
-
-  "init2 3" should "" in {
-    init2(oneToThree) shouldBe oneToTwo
-  }
-
-  "init2 4" should "" in {
-    init2(oneToTwo) shouldBe one
-  }
-
-  "init2 5" should "" in {
-    init2(one) shouldBe FNil
-  }
-
-  "length of empty list" should "be 0" in {
-    FList.length(FNil) shouldBe 0
-  }
-
-  "length of one to five list" should "be 5" in {
-    FList.length(oneToFive) shouldBe 5
-  }
 
   private val fiveToOne = Cons(5, Cons(4, Cons(3, Cons(2, Cons(1, FNil)))))
-
-
-
-
 
 
   "concat" should "work" in {
