@@ -24,12 +24,12 @@ object FList {
 
   def addOne(l: FList[Int]): FList[Int] =
     foldLeft(reverse(l), FNil: FList[Int])(
-      (acc, a) => Cons(a + 1, acc)
+      (t, h) => Cons(h + 1, t)
     )
 
-  def changeToString(is: FList[Int]): FList[String] =
-    foldLeft(reverse(is), FNil: FList[String])(
-      (acc, i) => Cons(i.toString, acc)
+  def changeToString(l: FList[Int]): FList[String] =
+    foldLeft(reverse(l), FNil: FList[String])(
+      (t, h) => Cons(h.toString, t)
     )
 
   def addLists(l1: FList[Int], l2: FList[Int]): FList[Int] =
