@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList.{addLists, addOne, changeToString, hasSubsequence}
+import interretis.functionalscala.introduction.FList._
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
@@ -43,6 +43,34 @@ class FunctionalListSpec extends FlatSpec with Matchers {
 
   "hasSubsequence" should "not work when no sublist" in {
     hasSubsequence(FList(1, 2, 1, 2, 4, 1, 1, 2, 4, 3), FList(1, 2, 3)) shouldBe false
+  }
+
+  "hasSubsequence2" should "work on complicated example" in {
+    hasSubsequence2(FList(2, 1, 3, 1, 2, 4, 1, 2, 3, 4), FList(1, 2, 3)) shouldBe true
+  }
+
+  "hasSubsequence2" should "work for two empty lists" in {
+    hasSubsequence2(FNil, FNil) shouldBe true
+  }
+
+  "hasSubsequence2" should "work when sublist is empty" in {
+    hasSubsequence2(FList(1), FNil) shouldBe true
+  }
+
+  "hasSubsequence2" should "work when whole equal to part" in {
+    hasSubsequence2(FList(2, 1, 3, 1, 2, 4, 1, 2, 3, 4), FList(2, 1, 3, 1, 2, 4, 1, 2, 3, 4)) shouldBe true
+  }
+
+  "hasSubsequence2" should "work when whole begins with part" in {
+    hasSubsequence2(FList(1, 2, 3, 1, 2, 4, 1, 2, 3, 4), FList(1, 2, 3)) shouldBe true
+  }
+
+  "hasSubsequence2" should "work when whole ends with part" in {
+    hasSubsequence2(FList(1, 2, 1, 2, 4, 1, 1, 2, 3), FList(1, 2, 3)) shouldBe true
+  }
+
+  "hasSubsequence2" should "not work when no sublist" in {
+    hasSubsequence2(FList(1, 2, 1, 2, 4, 1, 1, 2, 4, 3), FList(1, 2, 3)) shouldBe false
   }
 
 }

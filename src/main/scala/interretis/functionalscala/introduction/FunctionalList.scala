@@ -40,19 +40,30 @@ object FList {
     }
 
   def hasSubsequence[A](list: FList[A], sub: FList[A]): Boolean = {
-    def begins(l: FList[A], s: FList[A]): Boolean =
+    def startsWith(l: FList[A], s: FList[A]): Boolean =
       (l, s) match {
         case (_, FNil) => true
         case (Cons(h1, t1), Cons(h2, t2)) =>
-          h1 == h2 && begins(t1, t2)
+          h1 == h2 && startsWith(t1, t2)
         case _ => false
       }
     (list, sub) match {
       case (_, FNil) => true
       case (Cons(h1, t1), Cons(h2, t2)) =>
-        if (h1 == h2 && begins(t1, t2)) true
-        else hasSubsequence(t1, sub)
+        (h1 == h2 && startsWith(t1, t2)) || hasSubsequence(t1, sub)
       case _ => false
     }
+  }
+
+  def hasSubsequence2[A](list: FList[A], sublist: FList[A]): Boolean = {
+    def starts[A](l: FList[A], s: FList[A], backtrack: Boolean): Boolean = {
+      (l, s) match {
+        case (Cons(h1, t1), Cons(h2, t2)) =>
+          (h1 == h2 && starts(t1, t2, backtrack = false)) || (backtrack && starts(t1, s, backtrack = true))
+        case _ =>
+          s == FNil
+      }
+    }
+    starts(list, sublist, backtrack = true)
   }
 }
