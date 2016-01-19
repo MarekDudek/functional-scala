@@ -38,4 +38,21 @@ object FList {
       case (_, FNil) => FNil
       case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addLists(t1, t2))
     }
+
+  def hasSubsequence[A](list: FList[A], sub: FList[A]): Boolean = {
+    def begins(l: FList[A], s: FList[A]): Boolean =
+      (l, s) match {
+        case (_, FNil) => true
+        case (Cons(h1, t1), Cons(h2, t2)) =>
+          h1 == h2 && begins(t1, t2)
+        case _ => false
+      }
+    (list, sub) match {
+      case (_, FNil) => true
+      case (Cons(h1, t1), Cons(h2, t2)) =>
+        if (h1 == h2 && begins(t1, t2)) true
+        else hasSubsequence(t1, sub)
+      case _ => false
+    }
+  }
 }
