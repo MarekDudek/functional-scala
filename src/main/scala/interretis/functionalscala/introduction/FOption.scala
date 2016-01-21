@@ -32,3 +32,20 @@ sealed trait FOption[+A] {
 case class FSome[+A](get: A) extends FOption[A]
 
 case object FNone extends FOption[Nothing]
+
+object FOption {
+
+  def lift[A, B](f: A => B): FOption[A] => FOption[B] = _ map f
+
+  def map2[A, B, C](oa: FOption[A], ob: FOption[B])(f: (A, B) => C): FOption[C] =
+    oa flatMap {
+      a => ob map {
+        b => f(a, b)
+      }
+    }
+
+  def attempt[A](a: => A): FOption[A] =
+    try FSome(a) catch {
+      case e: Exception => FNone
+    }
+}
