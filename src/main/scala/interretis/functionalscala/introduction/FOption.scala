@@ -2,12 +2,14 @@ package interretis.functionalscala.introduction
 
 sealed trait FOption[+A] {
 
+  // transparent for function application, doesn't fail when no value present
   def map[B](f: A => B): FOption[B] =
     this match {
       case FNone => FNone
       case FSome(a) => FSome(f(a))
     }
 
+  // also doesn't fail on no value but function can also fail
   def flatMap[B](f: A => FOption[B]): FOption[B] =
     map(f) getOrElse FNone
 
@@ -19,7 +21,7 @@ sealed trait FOption[+A] {
 
   def orElse[B >: A](ob: => FOption[B]): FOption[B] =
     map(FSome(_)) getOrElse ob
-  
+
   def filter(f: A => Boolean): FOption[A] =
     this match {
       case FSome(a) if f(a) => this
