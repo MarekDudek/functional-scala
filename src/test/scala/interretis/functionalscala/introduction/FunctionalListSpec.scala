@@ -1,6 +1,6 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.FList._
+import interretis.functionalscala.introduction.FList.{addLists, addOne, changeToString, hasSubsequence, hasSubsequence2}
 import org.scalatest.{FlatSpec, Matchers}
 
 class FunctionalListSpec extends FlatSpec with Matchers {
