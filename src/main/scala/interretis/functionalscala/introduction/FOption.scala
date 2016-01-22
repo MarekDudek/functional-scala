@@ -44,6 +44,19 @@ object FOption {
       }
     }
 
+  def sequence[A](a: List[FOption[A]]): FOption[List[A]] =
+    a match {
+      case Nil => FSome(Nil)
+      case h :: t => h flatMap {
+        hh =>
+          sequence(t) map (tt => hh :: tt)
+      }
+    }
+
+  def sequence2[A](a: List[FOption[A]]): FOption[List[A]] =
+    a.foldRight[FOption[List[A]]](FSome(Nil))((x, y) => map2(x, y)(_ :: _))
+
+
   def attempt[A](a: => A): FOption[A] =
     try FSome(a) catch {
       case e: Exception => FNone

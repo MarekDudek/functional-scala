@@ -1,6 +1,7 @@
 package interretis.functionalscala.introduction
 
-import interretis.functionalscala.introduction.Stats.{abs, arithmeticMean, variance, variance2}
+import interretis.functionalscala.introduction.FOption.{sequence, sequence2}
+import interretis.functionalscala.introduction.Stats.{abs, arithmeticMean, variance}
 import org.scalatest.{FlatSpec, Matchers}
 
 class StatsSpec extends FlatSpec with Matchers {
@@ -21,17 +22,25 @@ class StatsSpec extends FlatSpec with Matchers {
     variance(Seq(3, 4, 7, 10)) shouldBe FSome(7.5)
   }
 
-  "variance (2) of empty list" should "be None" in {
-    variance2(Seq()) shouldBe FNone
-  }
-
-  "variance (2) of example from Wikipedia" should "be correct" in {
-    variance2(Seq(3, 4, 7, 10)) shouldBe FSome(7.5)
-  }
-
   "abs" should "work" in {
-    val variance = variance2(Seq(3, 4, 7, 10))
-    abs(variance) shouldBe FSome(7.5)
-    variance.map(math.abs) shouldBe FSome(7.5)
+    val v = variance(Seq(3, 4, 7, 10))
+    abs(v) shouldBe FSome(7.5)
+    v.map(math.abs) shouldBe FSome(7.5)
+  }
+
+  "sequence with None" should "return None" in {
+    sequence(List(FSome(1), FSome(2), FNone, FSome(4))) shouldBe FNone
+  }
+
+  "sequence without None" should "return Some" in {
+    sequence(List(FSome(1), FSome(2), FSome(3), FSome(4))) shouldBe FSome(List(1, 2, 3, 4))
+  }
+
+  "sequence (2) with None" should "return None" in {
+    sequence2(List(FSome(1), FSome(2), FNone, FSome(4))) shouldBe FNone
+  }
+
+  "sequence (2) without None" should "return Some" in {
+    sequence2(List(FSome(1), FSome(2), FSome(3), FSome(4))) shouldBe FSome(List(1, 2, 3, 4))
   }
 }
