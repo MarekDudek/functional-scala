@@ -44,18 +44,33 @@ object FOption {
       }
     }
 
-  def sequence[A](a: List[FOption[A]]): FOption[List[A]] =
-    a match {
+  def map2v2[A, B, C](oa: FOption[A], ob: FOption[B])(f: (A, B) => C): FOption[C] =
+    for {
+      a <- oa
+      b <- ob
+    } yield f(a, b)
+
+  def sequence[A](l: List[FOption[A]]): FOption[List[A]] =
+    l match {
       case Nil => FSome(Nil)
-      case h :: t => h flatMap {
-        hh =>
-          sequence(t) map (tt => hh :: tt)
+      case o :: os => o flatMap {
+        a => sequence(os) map (as => a :: as)
       }
     }
 
   def sequence2[A](a: List[FOption[A]]): FOption[List[A]] =
     a.foldRight[FOption[List[A]]](FSome(Nil))((x, y) => map2(x, y)(_ :: _))
 
+  def sequence3[A](a: List[FOption[A]]): FOption[List[A]] =
+    traverse(a)(identity)
+
+  def traverse[A, B](l: List[A])(f: A => FOption[B]): FOption[List[B]] =
+    l match {
+      case Nil => FSome(Nil)
+      case a :: as => f(a) flatMap {
+        b => traverse(as)(f) map (bb => b :: bb)
+      }
+    }
 
   def attempt[A](a: => A): FOption[A] =
     try FSome(a) catch {
